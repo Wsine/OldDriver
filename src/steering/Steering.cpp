@@ -146,20 +146,8 @@ int Steering::SendSteeringCommand(short  steerWheelAngle, BYTE steerWheelSpd,
     return 1;
 }
 
-int Steering::StartHuman_Driving(unsigned short int steeringangle) {
-    //SendSteeringCommand(0x10, steeringangle,);
-    return 1;
-}
-
-int Steering::StartSelf_Driving(short steeringangle, BYTE steerWheelSpd) {
+int Steering::WriteSteering(short steeringangle, BYTE steerWheelSpd) {
     SendSteeringCommand(steeringangle, steerWheelSpd, 0x00, 0x00, 0x20);
-    return 1;
-}
-
-
-int Steering::StopDSP(unsigned short int steeringangle)
-{
-    //SendSteeringCommand(0x00, steeringangle);
     return 1;
 }
 
@@ -173,7 +161,7 @@ int Steering::CloseDevice() {
     return 1;
 }
 
-double Steering::ReceiveStreeingAngle(void) {
+double Steering::ReceiveSteeringAngle(void) {
     double current_steeringangle = 0;
     short temp_angle = 0;
     int dwRel = VCI_Receive(nDeviceType, nDeviceInd, nCANInd_1, vco_receive, 60, 0);
@@ -187,10 +175,8 @@ double Steering::ReceiveStreeingAngle(void) {
         return current_steeringangle;
     } else if (dwRel == -1) {
         // no streeing CAN data. 
-        //VCI_CloseDevice(nDeviceType, nDeviceInd);
-        //VCI_OpenDevice(nDeviceType, nDeviceInd, 0);
-    } else {
-
+        // VCI_CloseDevice(nDeviceType, nDeviceInd);
+        // VCI_OpenDevice(nDeviceType, nDeviceInd, 0);
     }
     return 1;
 }

@@ -1,8 +1,9 @@
 #include <boost/interprocess/ipc/message_queue.hpp>
 #include <cstdio>
 #include <unistd.h>
-#include "accelerator/AccMain.hpp"
 #include "steering/SteeringMain.hpp"
+#include "accelerator/AccMain.hpp"
+#include "brake/BrakeMain.hpp"
 
 void fork_for_steering() {
     pid_t pid = fork();
@@ -22,9 +23,19 @@ void fork_for_accelerator() {
     }
 }
 
+void fork_for_brake() {
+    pid_t pid = fork();
+    if (pid == 0) {
+        // Children Process
+        brakeMain();
+        exit(0);
+    }
+}
+
 int main(int argc, char **argv) {
     fork_for_steering();
     fork_for_accelerator();
+    fork_for_brake();
 
     // Parent Process
     using namespace boost::interprocess;

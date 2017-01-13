@@ -36,12 +36,9 @@ public:
     int StartDevice(void );
     int CloseDevice();
 
-    int StartHuman_Driving(unsigned short int steering_angle);
-    int StartSelf_Driving(short steeringangle, BYTE steerWheelSpd);
-    int StopDSP(unsigned short int steering_angle);
+    int WriteSteering(short steeringangle, BYTE steerWheelSpd);
 
-    double ReceiveStreeingAngle();
-    int ReceiveVehicleSpeed();
+    double ReceiveSteeringAngle();
 };  
 
 #endif

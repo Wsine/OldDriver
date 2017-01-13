@@ -2,34 +2,44 @@
 #include <cstdio>
 #include <unistd.h>
 #include "const.h"
-#include "SteeringMsg.h"
-#include "Steering.h"
+#include "BrakeMsg.h"
+#include "BrakeRead.h"
+#include "BrakeWrite.h"
 
-static Steering steering;
+static BrakeRead brakeRead;
+static BrakeWrite brakeWrite;
 
-void initSteering() {
-    steering.StartDevice();
+void initBrake() {
+    brakeRead.Open(BAK_R_SERIAL_PORT, BAK_R_BAUD_RATE);
+    brakeWrite.Open(BAK_W_SERIAL_PORT, BAK_W_BAUD_RATE);
 }
 
-void handleMessage(const SteeringMsg& msg) {
-    if (!msg.toStop) {
-        steering.WriteSteering(msg.angle, msg.speed);
+void handleMessage(const BrakeMsg& msg) {
+    if (msg.toStop) {
+        brakeWrite.Reset();
+    } else {
+        brakeWrite.setAim(msg.aim);
+        brakeWrite.TurnToAim();
+        brakeRead.OnReceive();
+        if (brakeRead.getValue() != 0) {
+            brakeWrite.setCurrent(brakeRead.getValue());
+        }
     }
 }
 
-void steeringMain() {
+void brakeMain() {
     using namespace boost::interprocess;
     // Sleep and wait for creating message queue
     sleep(5);
-    // Initial Steering
-    initSteering();
+    // Initial Brake
+    initBrake();
     try {
         // open queue
-        message_queue mq(open_only, STEER_QUEUE_NAME);
+        message_queue mq(open_only, BRAKE_QUEUE_NAME);
         // receive message
         size_t recvd_size;
         unsigned int priority;
-        SteeringMsg msg, _msg;
+        BrakeMsg msg, _msg;
         while (true) {
             if (mq.get_num_msg() > 0) {
                 mq.receive((void*)&msg, sizeof(msg), recvd_size, priority);
