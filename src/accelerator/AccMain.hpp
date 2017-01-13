@@ -1,14 +1,39 @@
 #include <boost/interprocess/ipc/message_queue.hpp>
-#include <iostream>
+#include <cstdio>
 #include <unistd.h>
+#include "const.h"
 #include "AccMsg.h"
-#include "../const.h"
+#include "Accelerator.h"
+
+static Accelerator accelerator;
+
+void initAccelerator() {
+    accelerator.Open(ACC_SERIAL_PORT, ACC_BAUD_RATE);
+    accelerator.InputVoltage(ACC_INIT_VOLTAGE);
+    accelerator.ShiftRelay(ACC_OFF);
+}
+
+void handleMessage(const AccMsg& msg) {
+    if (msg.toStop) {
+        if (accelerator.IsShiftRelayON()) {
+            accelerator.InputVoltage(ACC_INIT_VOLTAGE);
+            accelerator.ShiftRelay(ACC_OFF);
+        }
+    } else {
+        if (!accelerator.IsShiftRelayON()) {
+            accelerator.InputVoltage(ACC_INIT_VOLTAGE);
+            accelerator.ShiftRelay(ACC_ON);
+        }
+        accelerator.InputVoltage(msg.value);
+    }
+}
 
 void accMain() {
     using namespace boost::interprocess;
-
+    // Sleep and wait for creating message queue
     sleep(5);
-
+    // Initial Accelerator
+    initAccelerator();
     try {
         // open queue
         message_queue mq(open_only, ACC_QUEUE_NAME);
@@ -19,11 +44,11 @@ void accMain() {
         while (true) {
             mq.receive((void*)&msg, sizeof(msg), recvd_size, priority);
             if (recvd_size != sizeof(msg)) {
-                std::cout << "error handling message" << std::endl;
+                printf("error handling accelerator message\n");
             }
-            std::cout << msg.value << std::endl;
+            handleMessage(msg);
         }
     } catch (interprocess_exception& e) {
-        std::cout << e.what() << std::endl;
+        printf("%s\n", e.what());
     }
 }

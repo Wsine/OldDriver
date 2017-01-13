@@ -4,6 +4,7 @@
 struct AccMsg {
     bool toStop;
     int value;
+    AccMsg() : toStop(true) {}
 };
 
 #endif

@@ -7,7 +7,7 @@
 #define OFF 0
 
 Accelerator::Accelerator() {
-    this->isShiftRelayON = false;
+    this->shiftRelayStatus = false;
 }
 
 Accelerator::~Accelerator() {
@@ -71,8 +71,13 @@ bool Accelerator::ShiftRelay(int iOnOrOff) {
 
     if (ucBuffer[0] == 0x02 && ucBuffer[1] == 0x0F && ucBuffer[2] == 0x02) {
         // Relay Successfully
+        this->shiftRelayStatus = iOnOrOff;
         return true;
     } else {
         return false;
     }
+}
+
+bool Accelerator::IsShiftRelayON() {
+    return this->shiftRelayStatus;
 }

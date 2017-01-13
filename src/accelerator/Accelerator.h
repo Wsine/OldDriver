@@ -1,11 +1,14 @@
 #ifndef _ACCELERATOR_H
 #define _ACCELERATOR_H
 
-#include "lib/uart/rpi_uart.h"
+#include "uart/rpi_uart.h"
 
 class Accelerator : public rpi_uart {
+private:
+    bool shiftRelayStatus;
+
 public:
-    bool isShiftRelayON;
+    bool IsShiftRelayON();
 
     Accelerator();
     ~Accelerator();
