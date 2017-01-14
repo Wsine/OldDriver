@@ -4,15 +4,15 @@
 #include "uart/rpi_uart.h"
 
 // Message Queue
-const char *ACC_QUEUE_NAME = "acc_message_queue";
-const int ACC_MSG_SIZE = 100;
-const char *STEER_QUEUE_NAME = "steering_message_queue";
-const int STEER_MSG_SIZE = 100;
-const char *BRAKE_QUEUE_NAME = "brake_message_queue";
-const int BRAKE_MSG_SIZE = 100;
+static const char *ACC_QUEUE_NAME = "acc_message_queue";
+static const int ACC_MSG_SIZE = 100;
+static const char *STEER_QUEUE_NAME = "steering_message_queue";
+static const int STEER_MSG_SIZE = 100;
+static const char *BRAKE_QUEUE_NAME = "brake_message_queue";
+static const int BRAKE_MSG_SIZE = 100;
 
 // Control Mode
-const int INIT_MODE = 0;
+static const int INIT_MODE = 0;
 enum CONTROL_MODE {
     MANUAL_MODE = 0,
     AUTO_MODE = 1, 
@@ -20,19 +20,19 @@ enum CONTROL_MODE {
 };
 
 // Serial Port
-const char *ACC_SERIAL_PORT = "/dev/ttyUSB0";
-const BAUDRATE ACC_BAUD_RATE = BR9600;
-const char *BAK_R_SERIAL_PORT = "/dev/ttyUSB1";
-const BAUDRATE BAK_R_BAUD_RATE = BR38400;
-const char *BAK_W_SERIAL_PORT = "/dev/ttyUSB2";
-const BAUDRATE BAK_W_BAUD_RATE = BR38400;
+static const char *ACC_SERIAL_PORT = "/dev/ttyUSB0";
+static const BAUDRATE ACC_BAUD_RATE = BR9600;
+static const char *BAK_R_SERIAL_PORT = "/dev/ttyUSB1";
+static const BAUDRATE BAK_R_BAUD_RATE = BR38400;
+static const char *BAK_W_SERIAL_PORT = "/dev/ttyUSB2";
+static const BAUDRATE BAK_W_BAUD_RATE = BR38400;
 
 // Strange Value
-const int ACC_INIT_VOLTAGE = 400;
-const int ACC_OFF = 0;
-const int ACC_ON = 1;
-const unsigned short BRAKE_LOOSE = 900;
-const unsigned short BRAKE_STAMP = 540;
-const unsigned short BRAKE_MARGIN = 15;
+static const int ACC_INIT_VOLTAGE = 400;
+static const int ACC_OFF = 0;
+static const int ACC_ON = 1;
+static const unsigned short BRAKE_LOOSE = 900;
+static const unsigned short BRAKE_STAMP = 540;
+static const unsigned short BRAKE_MARGIN = 15;
 
 #endif
