@@ -1,0 +1,10 @@
+struct Controller {
+    boolean steering_enabled;
+    double steering_angle;
+    double steering_speed;
+    boolean accelerator_enabled;
+    int32_t accelerator_value;
+    boolean brake_enabled;
+    int16_t current_speed;
+    int16_t target_speed;
+}

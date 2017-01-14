@@ -3,6 +3,9 @@
 
 #include "uart/rpi_uart.h"
 
+// LCM Channel Name
+static const char *LCM_CHANNEL_NAME = "controller";
+
 // Message Queue
 static const char *ACC_QUEUE_NAME = "acc_message_queue";
 static const int ACC_MSG_SIZE = 100;
@@ -34,5 +37,7 @@ static const int ACC_ON = 1;
 static const unsigned short BRAKE_LOOSE = 900;
 static const unsigned short BRAKE_STAMP = 540;
 static const unsigned short BRAKE_MARGIN = 15;
+static const float BRAKE_CALC_FACTOR = 5.0;
+static const float BRAKE_CALC_MAX = 3.0;
 
 #endif

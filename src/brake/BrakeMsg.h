@@ -4,6 +4,7 @@
 struct BrakeMsg {
     bool toStop;
     unsigned short aim;
+    BrakeMsg(bool _toStop = true) : toStop(_toStop) {}
 };
 
 #endif

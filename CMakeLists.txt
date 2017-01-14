@@ -16,4 +16,11 @@ endif()
 file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 add_executable(OldDriver ${SRC_FILES})
-target_link_libraries(OldDriver pthread rt controlcan)
+target_link_libraries(OldDriver pthread rt controlcan lcm)
+
+add_custom_target(
+    GenLCM 
+    COMMAND lcm-gen -x Controller.lcm
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/communication/
+)
+add_dependencies(OldDriver GenLCM)

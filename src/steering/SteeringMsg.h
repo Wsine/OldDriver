@@ -5,7 +5,7 @@ struct SteeringMsg {
     bool toStop;
     short angle;
     unsigned char speed;
-    SteeringMsg() : toStop(true) {}
+    SteeringMsg(bool _toStop = true) : toStop(_toStop) {}
 };
 
 #endif

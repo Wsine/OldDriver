@@ -20,10 +20,10 @@ void handleMessage(const BrakeMsg& msg) {
     } else {
         brakeWrite.setAim(msg.aim);
         brakeWrite.TurnToAim();
-        brakeRead.OnReceive();
-        if (brakeRead.getValue() != 0) {
-            brakeWrite.setCurrent(brakeRead.getValue());
-        }
+    }
+    brakeRead.OnReceive();
+    if (brakeRead.getValue() != 0) {
+        brakeWrite.setCurrent(brakeRead.getValue());
     }
 }
 
