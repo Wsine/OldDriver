@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 2.8)
 project(OldDriver)
 
-find_package(Boost 1.54 REQUIRED)
+find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/include/)
 include_directories(${PROJECT_SOURCE_DIR}/src/)
+
+##################### Source Binary ########################
 
 add_library(controlcan SHARED IMPORTED)
 if (${CMAKE_SIZEOF_VOID_P} EQUAL 8)
@@ -24,3 +26,13 @@ add_custom_target(
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/communication/
 )
 add_dependencies(OldDriver GenLCM)
+
+##################### Test Binary ########################
+
+add_definitions(-DBOOST_TEST_DYN_LINK)
+file(GLOB_RECURSE TEST_FILES ${PROJECT_SOURCE_DIR}/test/*.cpp)
+add_executable(OldDriverTest ${TEST_FILES})
+target_link_libraries(OldDriverTest ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
+enable_testing()
+add_test(NAME OldDriverTest COMMAND OldDriverTest)
