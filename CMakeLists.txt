@@ -6,7 +6,7 @@ include_directories(${Boost_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/include/)
 include_directories(${PROJECT_SOURCE_DIR}/src/)
 
-##################### Source Binary ########################
+##################### Source Binary #######################
 
 add_library(controlcan SHARED IMPORTED)
 if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
@@ -21,7 +21,7 @@ add_executable(OldDriver ${SRC_FILES})
 target_link_libraries(OldDriver pthread rt controlcan lcm)
 
 add_custom_target(
-    GenLCM 
+    GenLCM
     COMMAND lcm-gen -x Controller.lcm
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/communication/
 )
@@ -44,3 +44,11 @@ target_link_libraries(OldDriverTest ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY} pthread
 
 enable_testing()
 add_test(NAME OldDriverTest COMMAND OldDriverTest)
+
+##################### Test Binary ########################
+
+add_custom_target(
+    run
+    COMMAND OldDriver
+    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+)
