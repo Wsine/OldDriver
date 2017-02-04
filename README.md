@@ -4,7 +4,7 @@ The goal of this project is to achieve an awesome controller of an unmanned car.
 
 ## Preinstallation
 
-1. **Boost** environment, no minimum version aquired, just support message queue function.
+1. **Boost** environment, no minimum version aquired, just support message queue function, with cmake associated.
 2. **Pthread** header file, in general it exists on every linux system, if not, get one.
 3. **LCM** environment, follow the official installation guide.
 4. **CMake**, at least version 2.8.
@@ -18,6 +18,8 @@ cd build
 cmake ..
 # compile and build
 make
+# test the code
+make test
 # run the program
 make run
 # stop the program
