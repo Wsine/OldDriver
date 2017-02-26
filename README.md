@@ -2,6 +2,10 @@
 
 The goal of this project is to achieve an awesome controller of an unmanned car. It is a pure linux project running on x86 architeture machine. Thanks to boost, we can use IPC mechanism to pass the message between three part of the controller, accelerator, brake and steering. Outside the controller, we use LCM(Lightweight Communications and Marshalling) to communicate with the application layer.
 
+## Architecture
+
+![pic/Architecture.png](pic/Architecture.png)
+
 ## Preinstallation
 
 1. **Boost** environment, no minimum version aquired, just support message queue function, with cmake associated.
